@@ -15,10 +15,11 @@ class Model {
 
   ///predicts abstract number input
   Future<List?> getPrediction(
-      List<double> input, List<int> shape, DType dtype) async {
+      File myFile, List<double> input, List<int> shape, DType dtype) async {
+    List byteArray = myFile.readAsBytesSync();
     final List? prediction = await _channel.invokeListMethod('predict', {
       "index": _index,
-      "data": input,
+      "data": byteArray,
       "shape": shape,
       "dtype": dtype.toString().split(".").last
     });
